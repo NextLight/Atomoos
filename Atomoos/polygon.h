@@ -2,12 +2,14 @@
 #include <GL/glew.h>
 namespace MooGL
 {
-	class polygon
+	class Polygon
 	{
 	public:
-		polygon() {}
-		polygon(GLfloat* vertices, GLsizei size);
+		Polygon() {}
+		Polygon(GLfloat* vertices, GLsizei size);
 		GLuint VAO;
 		GLsizei size;
+
+		void draw() const;
 	};
 }

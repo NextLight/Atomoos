@@ -1,15 +1,15 @@
 #pragma once
 #include "polygon.h"
 #include "mooTypes.h"
+#include "shaderProgram.h"
 namespace MooGL
 {
-	class circle
+	class Circle
 	{
 	public:
-		circle() {}
-		circle(MooGL::polygon polygon, MooGL::coord2d* center, MooGL::colorRGB color);
-		circle(GLsizei n, GLfloat r, MooGL::coord2d* center, MooGL::colorRGB color);
-		~circle();
+		Circle() {}
+		Circle(MooGL::Polygon polygon, MooGL::coord2d* center, MooGL::colorRGB color);
+		Circle(GLsizei n, GLfloat r, MooGL::coord2d* center, MooGL::colorRGB color);
 
 		void draw();
 
@@ -19,10 +19,9 @@ namespace MooGL
 		static GLfloat * generateVertices(GLsizei n, GLfloat r);
 
 	private:
-		MooGL::polygon polygon;
+		MooGL::Polygon polygon;
 
-		GLuint shaderProgram;
-		GLint uniformCenter, uniformColor;
+		ShaderProgram shader;
 
 #define PI 3.14159265358979
 

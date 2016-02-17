@@ -32,7 +32,7 @@ void MooGL::Init(char* title, int width, int height, bool fullScreen, int argc, 
 	glewExperimental = GL_TRUE;
 	glewInit();
 
-	mouse.circle = circle(50, 0.25f, &mouse.coord, { 1.0f, 0.5f, 0.2f });
+	mouse.circle = Circle(50, 0.25f, &mouse.coord, { 0.3f, 0.5f, 0.9f });
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 /*
@@ -60,46 +60,6 @@ bool MooGL::getFullScreen()
 void MooGL::toggleFullScreen()
 {
 	glutFullScreenToggle();
-}
-
-GLuint MooGL::compileShader(const GLchar* source, shaderType type)
-{
-	GLuint shader = glCreateShader(type);
-	glShaderSource(shader, 1, &source, NULL);
-	glCompileShader(shader);
-
-	GLint success;
-	GLchar log[512];
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(shader, 512, NULL, log);
-		std::cout << "ERROR SHADER COMPILATION FAILED\n" << log << std::endl;
-		return 0; // ?
-	}
-	return shader;
-}
-
-GLuint MooGL::programShader(GLchar* vertex, GLchar* fragment)
-{
-	GLuint vertexShader = compileShader(vertex, shaderType::vertex);
-	GLuint fragmentShader = compileShader(fragment, shaderType::fragment);
-
-	GLuint shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	GLint success;
-	GLchar log[512];
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderProgram, 512, NULL, log);
-		std::cout << "ERROR SHADER LINKING FAILED\n" << log << std::endl;
-		return 0; // ?
-	}
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-	return shaderProgram;
 }
 
 void reshape(int w, int h)
