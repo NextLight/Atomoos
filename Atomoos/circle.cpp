@@ -1,11 +1,10 @@
-#include "circle.h"
-#include "mooTypes.h"
-#include "MooGL.h"
+#include "Circle.h"
+#include "Types.h"
 #include <cmath>
 #include <iostream>
 #include <memory>
 
-MooGL::Circle::Circle(MooGL::Polygon polygon, MooGL::coord2d* center, MooGL::colorRGB color) :
+Game::Circle::Circle(Game::Polygon polygon, Game::coord2d* center, Game::colorRGB color) :
 	polygon(polygon),
 	center(center),
 	color(color),
@@ -15,18 +14,18 @@ MooGL::Circle::Circle(MooGL::Polygon polygon, MooGL::coord2d* center, MooGL::col
 	shader.addUniformf("extColor", { &(this->color.r), &this->color.g, &this->color.b });
 }
 
-MooGL::Circle::Circle(GLsizei n, GLfloat r, MooGL::coord2d* center, MooGL::colorRGB color) :
-	Circle(MooGL::Polygon(generateVertices(n, r), n), center, color)
+Game::Circle::Circle(GLsizei n, GLfloat r, Game::coord2d* center, Game::colorRGB color) :
+	Circle(Game::Polygon(generateVertices(n, r), n), center, color)
 { 
 }
 
-void MooGL::Circle::draw()
+void Game::Circle::draw()
 {
 	shader.use({ "center" });
 	polygon.draw();
 }
 
-GLfloat* MooGL::Circle::generateVertices(GLsizei n, GLfloat r)
+GLfloat* Game::Circle::generateVertices(GLsizei n, GLfloat r)
 {
 	int size = n * 2;
 	GLfloat* res = new GLfloat[size];

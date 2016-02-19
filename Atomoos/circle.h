@@ -1,25 +1,25 @@
 #pragma once
-#include "polygon.h"
-#include "mooTypes.h"
-#include "shaderProgram.h"
-namespace MooGL
+#include "Polygon.h"
+#include "Types.h"
+#include "ShaderProgram.h"
+namespace Game
 {
 	class Circle
 	{
 	public:
 		Circle() {}
-		Circle(MooGL::Polygon polygon, MooGL::coord2d* center, MooGL::colorRGB color);
-		Circle(GLsizei n, GLfloat r, MooGL::coord2d* center, MooGL::colorRGB color);
+		Circle(Game::Polygon polygon, Game::coord2d* center, Game::colorRGB color);
+		Circle(GLsizei n, GLfloat r, Game::coord2d* center, Game::colorRGB color);
 
 		void draw();
 
-		MooGL::coord2d * center;
-		MooGL::colorRGB color;
+		Game::coord2d * center;
+		Game::colorRGB color;
 
 		static GLfloat * generateVertices(GLsizei n, GLfloat r);
 
 	private:
-		MooGL::Polygon polygon;
+		Game::Polygon polygon;
 
 		ShaderProgram shader;
 

@@ -147,14 +147,14 @@
   <ItemGroup>
     <ClCompile Include="Atomoos.cpp" />
     <ClCompile Include="Circle.cpp" />
-    <ClCompile Include="MooGL.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h" />
-    <ClInclude Include="MooGL.h" />
-    <ClInclude Include="mooTypes.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Types.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="ShaderProgram.h" />
   </ItemGroup>

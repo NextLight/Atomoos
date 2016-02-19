@@ -1,6 +1,6 @@
 #pragma once
 #include <GL/glew.h>
-namespace MooGL
+namespace Game
 {
 	class Polygon
 	{

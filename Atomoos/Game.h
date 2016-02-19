@@ -1,9 +1,9 @@
 #pragma once
-#include "mooTypes.h"
-#include "polygon.h"
-#include "circle.h"
+#include "Types.h"
+#include "Polygon.h"
+#include "Circle.h"
 //#include "mouse.h"
-namespace MooGL
+namespace Game
 {
 	struct window_t {
 		int width, height;
@@ -11,8 +11,8 @@ namespace MooGL
 
 	struct mouse_t
 	{
-		MooGL::Circle circle;
-		MooGL::coord2d coord;
+		Game::Circle circle;
+		Game::coord2d coord;
 	} static mouse;
 
 	void Init(char* title, int width, int height, bool fullScreen,int argc, char **argv);

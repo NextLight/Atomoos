@@ -1,6 +1,6 @@
-#include <GL/glew.h>
 #pragma once
-namespace MooGL
+#include <GL/glew.h>
+namespace Game
 {
 	struct coord2d {
 		GLfloat x, y;

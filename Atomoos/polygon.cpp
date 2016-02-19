@@ -1,6 +1,6 @@
-#include "polygon.h"
+#include "Polygon.h"
 
-MooGL::Polygon::Polygon(GLfloat* vertices, GLsizei size) :
+Game::Polygon::Polygon(GLfloat* vertices, GLsizei size) :
 	size(size)
 {
 	GLuint VBO;
@@ -19,7 +19,7 @@ MooGL::Polygon::Polygon(GLfloat* vertices, GLsizei size) :
 	glBindVertexArray(0);
 }
 
-void MooGL::Polygon::draw() const
+void Game::Polygon::draw() const
 {
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_POLYGON, 0, size);

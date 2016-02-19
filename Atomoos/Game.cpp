@@ -1,4 +1,4 @@
-#include "MooGL.h"
+#include "Game.h"
 #include <GL/freeglut.h>
 #include <GL/glew.h>
 #include <cstdio>
@@ -13,7 +13,7 @@ void keyboard(unsigned char key, int x, int y);
 void reshape(int w, int h);
 void updateMousePosition(int x, int y);
 
-void MooGL::Init(char* title, int width, int height, bool fullScreen, int argc, char **argv)
+void Game::Init(char* title, int width, int height, bool fullScreen, int argc, char **argv)
 {
 	glutInit(&argc, argv);
 	glutInitWindowSize(window.width = width, window.height = height);
@@ -36,7 +36,7 @@ void MooGL::Init(char* title, int width, int height, bool fullScreen, int argc, 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 /*
-void MooGL::Close()
+void Game::Close()
 {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
@@ -44,7 +44,7 @@ void MooGL::Close()
 }
 */
 
-void MooGL::setFullScreen(bool b)
+void Game::setFullScreen(bool b)
 {
 	if (b)
 		glutFullScreen();
@@ -52,20 +52,20 @@ void MooGL::setFullScreen(bool b)
 		glutLeaveFullScreen();
 }
 
-bool MooGL::getFullScreen()
+bool Game::getFullScreen()
 {
 	return glutGet(GLUT_FULL_SCREEN);
 }
 
-void MooGL::toggleFullScreen()
+void Game::toggleFullScreen()
 {
 	glutFullScreenToggle();
 }
 
 void reshape(int w, int h)
 {
-	MooGL::window.width = w;
-	MooGL::window.height = h;
+	Game::window.width = w;
+	Game::window.height = h;
 	int size = w < h ? w : h;
 	//glViewport((w - size) / 2, (h - size) / 2, size, size);
 	glViewport(0, 0, w, h);
@@ -75,7 +75,7 @@ void keyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 'f':
-		MooGL::toggleFullScreen();
+		Game::toggleFullScreen();
 		break;
 	case 27: // ESC
 		exit(0);
@@ -91,15 +91,15 @@ void mouseClick(int button, int state, int x, int y)
 
 void updateMousePosition(int x, int y)
 {
-	MooGL::mouse.coord.x = +x * 2 / (float)MooGL::window.width - 1;
-	MooGL::mouse.coord.y = -y * 2 / (float)MooGL::window.height + 1;
+	Game::mouse.coord.x = +x * 2 / (float)Game::window.width - 1;
+	Game::mouse.coord.y = -y * 2 / (float)Game::window.height + 1;
 }
 
 void render(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	MooGL::mouse.circle.draw();
+	Game::mouse.circle.draw();
 	
 	glutSwapBuffers();
 }
