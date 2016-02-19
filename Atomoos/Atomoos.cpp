@@ -5,7 +5,7 @@
 
 int main(int argc, char **argv)
 {
-	Game::Init("beh", 900, 900, 0, argc, argv);
+	Game::Init("beh", 900, 900, 0);
 
 	glutMainLoop();
 	

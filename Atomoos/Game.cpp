@@ -13,9 +13,9 @@ void keyboard(unsigned char key, int x, int y);
 void reshape(int w, int h);
 void updateMousePosition(int x, int y);
 
-void Game::Init(char* title, int width, int height, bool fullScreen, int argc, char **argv)
+void Game::Init(char* title, int width, int height, bool fullScreen)
 {
-	glutInit(&argc, argv);
+	glutInit(new int, nullptr);
 	glutInitWindowSize(window.width = width, window.height = height);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow(title);
