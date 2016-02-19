@@ -7,9 +7,12 @@ namespace Game
 	public:
 		Polygon() {}
 		Polygon(GLfloat* vertices, GLsizei size);
+		~Polygon();
 		GLuint VAO;
 		GLsizei size;
 
 		void draw() const;
+	private:
+		GLuint VBO;
 	};
 }

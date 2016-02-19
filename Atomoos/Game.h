@@ -16,6 +16,7 @@ namespace Game
 	} static mouse;
 
 	void Init(char* title, int width, int height, bool fullScreen);
+	void Close();
 	void setFullScreen(bool b);
 	bool getFullScreen();
 	void toggleFullScreen();

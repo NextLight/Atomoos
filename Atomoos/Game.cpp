@@ -35,14 +35,6 @@ void Game::Init(char* title, int width, int height, bool fullScreen)
 	mouse.circle = Circle(50, 0.25f, &mouse.coord, { 0.3f, 0.5f, 0.9f });
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
-/*
-void Game::Close()
-{
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
-}
-*/
 
 void Game::setFullScreen(bool b)
 {
@@ -67,7 +59,6 @@ void reshape(int w, int h)
 	Game::window.width = w;
 	Game::window.height = h;
 	int size = w < h ? w : h;
-	//glViewport((w - size) / 2, (h - size) / 2, size, size);
 	glViewport(0, 0, w, h);
 }
 
