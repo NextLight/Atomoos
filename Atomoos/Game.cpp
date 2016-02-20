@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <GL/freeglut.h>
 #include <GL/glew.h>
+#include "Types.h"
 #include <cstdio>
 #include <iostream>
 #include <cmath>
@@ -54,6 +55,16 @@ void Game::toggleFullScreen()
 	glutFullScreenToggle();
 }
 
+void Game::write(const char* s, coord2d coord, colorRGB color)
+{
+	//glLoadIdentity();
+	//glScalef(0.3, 0.3, 1);
+	glColor3f(color.r, color.g, color.b);
+	glRasterPos2f(coord.x, coord.y);
+	glutBitmapString(GLUT_BITMAP_HELVETICA_18, (const unsigned char*)"ciao");
+	// TODO: use glutStrokeString(GLUT_STROKE_ROMAN, (const unsigned char*)s);
+}
+
 void reshape(int w, int h)
 {
 	Game::window.width = w;
@@ -88,9 +99,10 @@ void updateMousePosition(int x, int y)
 
 void render(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Game::mouse.circle.draw();
+	Game::mainRender();
 	
 	glutSwapBuffers();
 }
