@@ -8,7 +8,7 @@ namespace Game
 	{
 	public:
 		Circle() {}
-		Circle(Game::Polygon polygon, Game::coord2d* center, Game::colorRGB color);
+		Circle(Game::Polygon* polygon, Game::coord2d* center, Game::colorRGB color);
 		Circle(GLsizei n, GLfloat r, Game::coord2d* center, Game::colorRGB color);
 
 		void draw();
@@ -19,7 +19,7 @@ namespace Game
 		static GLfloat * generateVertices(GLsizei n, GLfloat r);
 
 	private:
-		Game::Polygon polygon;
+		Game::Polygon * polygon;
 
 		ShaderProgram shader;
 

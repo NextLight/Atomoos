@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-Game::Circle::Circle(Game::Polygon polygon, Game::coord2d* center, Game::colorRGB color) :
+Game::Circle::Circle(Game::Polygon* polygon, Game::coord2d* center, Game::colorRGB color) :
 	polygon(polygon),
 	center(center),
 	color(color),
@@ -15,14 +15,14 @@ Game::Circle::Circle(Game::Polygon polygon, Game::coord2d* center, Game::colorRG
 }
 
 Game::Circle::Circle(GLsizei n, GLfloat r, Game::coord2d* center, Game::colorRGB color) :
-	Circle(Game::Polygon(generateVertices(n, r), n), center, color)
+	Circle(new Game::Polygon(generateVertices(n, r), n), center, color)
 { 
 }
 
 void Game::Circle::draw()
 {
 	shader.use({ "center" });
-	polygon.draw();
+	polygon->draw();
 }
 
 GLfloat* Game::Circle::generateVertices(GLsizei n, GLfloat r)

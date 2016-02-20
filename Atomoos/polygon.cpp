@@ -1,4 +1,5 @@
 #include "Polygon.h"
+#include <iostream>
 
 Game::Polygon::Polygon(GLfloat* vertices, GLsizei size) :
 	size(size)
