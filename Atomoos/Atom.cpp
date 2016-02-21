@@ -10,5 +10,5 @@ Atom::Atom(coord2d* center, colorRGB* color) :
 
 void Atom::Init()
 {
-	Atom::defaultPolygon = new Game::Polygon(Game::Circle::generateVertices(200, 0.1), 200);
+	Atom::defaultPolygon = new Game::Polygon(Circle::generateVertices(200, 0.1), 200);
 }

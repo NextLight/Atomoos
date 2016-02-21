@@ -5,7 +5,7 @@
 namespace Game
 {
 	struct window_t {
-		int width, height;
+		GLint width, height;
 	} static window;
 
 	struct mouse_t
@@ -15,9 +15,12 @@ namespace Game
 	} static mouse;
 
 	void Init(char* title, int width, int height, bool fullScreen);
-	void mainRender();
 	void setFullScreen(bool b);
 	bool getFullScreen();
 	void toggleFullScreen();
+
+	void mainRender();
+	void mouseLeftDown(coord2d c);
+
 	void write(const char * s, coord2d coord, colorRGB color);
 }
