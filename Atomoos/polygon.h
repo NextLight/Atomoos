@@ -6,7 +6,7 @@ namespace Game
 	{
 	public:
 		Polygon() {}
-		Polygon(GLfloat* vertices, GLsizei size);
+		Polygon(const GLfloat* vertices, GLsizei size);
 		~Polygon();
 		GLuint VAO;
 		GLsizei size;

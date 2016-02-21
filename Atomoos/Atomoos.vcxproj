@@ -145,6 +145,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Atom.cpp" />
     <ClCompile Include="Atomoos.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="ShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Atom.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Types.h" />

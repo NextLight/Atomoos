@@ -8,18 +8,17 @@ namespace Game
 	{
 	public:
 		Circle() {}
-		Circle(Game::Polygon* polygon, Game::coord2d* center, Game::colorRGB color);
-		Circle(GLsizei n, GLfloat r, Game::coord2d* center, Game::colorRGB color);
+		Circle(const Game::Polygon* polygon, coord2d* center, colorRGB* color);
+		Circle(GLsizei n, GLfloat r, coord2d* center, colorRGB* color);
 
 		void draw();
 
-		Game::coord2d * center;
-		Game::colorRGB color;
+		coord2d * center;
+		colorRGB * color;
 
-		static GLfloat * generateVertices(GLsizei n, GLfloat r);
-
-	private:
-		Game::Polygon * polygon;
+		static const GLfloat * generateVertices(GLsizei n, GLfloat r);
+	protected:
+		const Game::Polygon * polygon;
 
 		ShaderProgram shader;
 

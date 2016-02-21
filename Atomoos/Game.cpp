@@ -6,7 +6,8 @@
 #include <iostream>
 #include <cmath>
 
-#include "circle.h"
+#include "Circle.h"
+#include "Atom.h"
 
 void render(void);
 void mouseClick(int button, int state, int x, int y);
@@ -33,7 +34,8 @@ void Game::Init(char* title, int width, int height, bool fullScreen)
 	glewExperimental = GL_TRUE;
 	glewInit();
 
-	mouse.circle = Circle(50, 0.25f, &mouse.coord, { 0.3f, 0.5f, 0.9f });
+	Atom::Init();
+	mouse.circle = Circle(50, 0.25f, &mouse.coord, new colorRGB(0.3f, 0.5f, 0.9f));
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
@@ -61,7 +63,7 @@ void Game::write(const char* s, coord2d coord, colorRGB color)
 	//glScalef(0.3, 0.3, 1);
 	glColor3f(color.r, color.g, color.b);
 	glRasterPos2f(coord.x, coord.y);
-	glutBitmapString(GLUT_BITMAP_HELVETICA_18, (const unsigned char*)"ciao");
+	glutBitmapString(GLUT_BITMAP_HELVETICA_18, (const unsigned char*)s);
 	// TODO: use glutStrokeString(GLUT_STROKE_ROMAN, (const unsigned char*)s);
 }
 

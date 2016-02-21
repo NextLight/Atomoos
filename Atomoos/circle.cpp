@@ -4,17 +4,17 @@
 #include <iostream>
 #include <memory>
 
-Game::Circle::Circle(Game::Polygon* polygon, Game::coord2d* center, Game::colorRGB color) :
+Game::Circle::Circle(const Game::Polygon* polygon, coord2d* center, colorRGB* color) :
 	polygon(polygon),
 	center(center),
 	color(color),
 	shader(vertexSource, fragmentSource)
 {
-	shader.addUniformf("center", { &this->center->x, &this->center->y });
-	shader.addUniformf("extColor", { &(this->color.r), &this->color.g, &this->color.b });
+	shader.addUniformf("center", { &center->x, &center->y });
+	shader.addUniformf("extColor", { &color->r, &color->g, &color->b });
 }
 
-Game::Circle::Circle(GLsizei n, GLfloat r, Game::coord2d* center, Game::colorRGB color) :
+Game::Circle::Circle(GLsizei n, GLfloat r, coord2d* center, colorRGB* color) :
 	Circle(new Game::Polygon(generateVertices(n, r), n), center, color)
 { 
 }
@@ -25,7 +25,7 @@ void Game::Circle::draw()
 	polygon->draw();
 }
 
-GLfloat* Game::Circle::generateVertices(GLsizei n, GLfloat r)
+const GLfloat* Game::Circle::generateVertices(GLsizei n, GLfloat r)
 {
 	int size = n * 2;
 	GLfloat* res = new GLfloat[size];

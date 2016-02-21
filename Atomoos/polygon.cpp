@@ -1,7 +1,7 @@
 #include "Polygon.h"
 #include <iostream>
 
-Game::Polygon::Polygon(GLfloat* vertices, GLsizei size) :
+Game::Polygon::Polygon(const GLfloat* vertices, GLsizei size) :
 	size(size)
 {
 	glGenBuffers(1, &VBO);
