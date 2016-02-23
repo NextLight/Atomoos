@@ -1,5 +1,6 @@
 #pragma once
 #include <GL/glew.h>
+#include <cmath>
 typedef struct coord2d {
 	coord2d() {}
 	coord2d(GLfloat x, GLfloat y) : x(x), y(y) {}
@@ -8,7 +9,14 @@ typedef struct coord2d {
 	GLfloat x, y;
 };
 
+float inline randf()
+{
+	return rand() / float(RAND_MAX);
+}
+
 typedef struct colorRGB {
 	colorRGB(GLfloat r, GLfloat g, GLfloat b) : r(r), g(g), b(b) {}
 	GLfloat r, g, b;
+
+	static colorRGB* rand() { return new colorRGB(randf(), randf(), randf()); }
 };
