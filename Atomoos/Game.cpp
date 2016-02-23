@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <ctime>
 #include "Circle.h"
 #include "Atom.h"
 
@@ -17,6 +18,7 @@ void updateMousePosition(int x, int y);
 
 void Game::Init(char* title, int width, int height, bool fullScreen)
 {
+	srand(time(NULL));
 	glutInit(new int, nullptr);
 	glutInitWindowSize(window.width = width, window.height = height);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
