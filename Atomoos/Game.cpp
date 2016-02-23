@@ -16,57 +16,64 @@ void keyboard(unsigned char key, int x, int y);
 void reshape(int w, int h);
 void updateMousePosition(int x, int y);
 
-void Game::Init(char* title, int width, int height, bool fullScreen)
+namespace Game
 {
-	srand(time(NULL));
-	glutInit(new int, nullptr);
-	glutInitWindowSize(window.width = width, window.height = height);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-	glutCreateWindow(title);
-	setFullScreen(fullScreen);
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	window_t window;
+	mouse_t mouse;
 
-	glutDisplayFunc(render);
-	glutIdleFunc(render);
-	glutMouseFunc(mouseClick);
-	glutPassiveMotionFunc(updateMousePosition);
-	glutReshapeFunc(reshape);
-	glutKeyboardFunc(keyboard);
+	void Init(char* title, int width, int height, bool fullScreen)
+	{
+		srand(time(NULL));
+		glutInit(new int, nullptr);
+		glutInitWindowSize(window.width = width, window.height = height);
+		glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+		glutCreateWindow(title);
+		setFullScreen(fullScreen);
+		glClearColor(0.0, 0.0, 0.0, 0.0);
 
-	glewExperimental = GL_TRUE;
-	glewInit();
+		glutDisplayFunc(render);
+		glutIdleFunc(render);
+		glutMouseFunc(mouseClick);
+		glutPassiveMotionFunc(updateMousePosition);
+		glutReshapeFunc(reshape);
+		glutKeyboardFunc(keyboard);
 
-	Atom::Init();
-	mouse.circle = Circle(50, 0.025f, &mouse.coord, new colorRGB(0.3f, 0.5f, 0.9f));
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-}
+		glewExperimental = GL_TRUE;
+		glewInit();
 
-void Game::setFullScreen(bool b)
-{
-	if (b)
-		glutFullScreen();
-	else
-		glutLeaveFullScreen();
-}
+		Atom::Init();
+		mouse.circle = Circle(50, 0.025f, &mouse.coord, new colorRGB(0.3f, 0.5f, 0.9f));
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
 
-bool Game::getFullScreen()
-{
-	return glutGet(GLUT_FULL_SCREEN);
-}
+	void setFullScreen(bool b)
+	{
+		if (b)
+			glutFullScreen();
+		else
+			glutLeaveFullScreen();
+	}
 
-void Game::toggleFullScreen()
-{
-	glutFullScreenToggle();
-}
+	bool getFullScreen()
+	{
+		return glutGet(GLUT_FULL_SCREEN);
+	}
 
-void Game::write(const char* s, coord2d coord, colorRGB color)
-{
-	//glLoadIdentity();
-	//glScalef(0.3, 0.3, 1);
-	glColor3f(color.r, color.g, color.b);
-	glRasterPos2f(coord.x, coord.y);
-	glutBitmapString(GLUT_BITMAP_HELVETICA_18, (const unsigned char*)s);
-	// TODO: use glutStrokeString(GLUT_STROKE_ROMAN, (const unsigned char*)s);
+	void toggleFullScreen()
+	{
+		glutFullScreenToggle();
+	}
+
+	void write(const char* s, coord2d coord, colorRGB color)
+	{
+		//glLoadIdentity();
+		//glScalef(0.3, 0.3, 1);
+		glColor3f(color.r, color.g, color.b);
+		glRasterPos2f(coord.x, coord.y);
+		glutBitmapString(GLUT_BITMAP_HELVETICA_18, (const unsigned char*)s);
+		// TODO: use glutStrokeString(GLUT_STROKE_ROMAN, (const unsigned char*)s);
+	}
+
 }
 
 void reshape(int w, int h)

@@ -9,7 +9,6 @@
 
 std::vector<Atom*> atoms;
 Atom* centralAtom;
-std::string s = "a";
 constexpr float circ = 2 * PI;
 constexpr float radius = 0.7f;
 
@@ -22,9 +21,10 @@ int main(int argc, char **argv)
 }
 
 
+std::string s = "a";
 void Game::mainRender()
 {
-	Game::write(s.c_str(), { -0.9f, 0.9f }, { 0.1f, 0.8f, 0.4f });
+	Game::write(s.c_str(), { -0.95f, 0.95f }, { 0.1f, 0.8f, 0.4f });
 	centralAtom->draw();
 	for (Atom* a : atoms)
 		a->draw();
@@ -32,8 +32,6 @@ void Game::mainRender()
 
 void Game::mouseLeftDown(coord2d c)
 {
-	// this misteriously prints 0 0  
-	//std::cout << Game::window.width << " " << Game::window.height << std::endl;
 	int pos = 0;
 	float theta, ang = 0;
 	if (atoms.size() > 0) {
