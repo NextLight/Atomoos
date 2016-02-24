@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 {
 	Game::Init("beh", 900, 900, 0);
 	centralAtom = new Atom(new coord2d(0, 0), colorRGB::rand());
+	atoms.push_back(new Atom(new coord2d(radius, 0), new colorRGB(1, 1, 1)));
 	glutMainLoop();
 	return 0;
 }
@@ -33,10 +34,10 @@ void Game::mainRender()
 void Game::mouseLeftDown(coord2d c)
 {
 	int pos = 0;
-	float theta = 0, ang = c.getRadians(), start = 0;
+	float theta = 0, ang = c.getRadians();
 	if (atoms.size() > 0) {
-		start = atoms[0]->center->getRadians();
 		theta = circ / atoms.size();
+		float start = atoms[0]->center->getRadians();
 		if (start > ang)
 			start -= circ;
 		pos = floor((ang - start) / theta) + 1;
@@ -44,12 +45,12 @@ void Game::mouseLeftDown(coord2d c)
 	atoms.insert(atoms.begin() + pos, centralAtom);
 	s = std::to_string(c.x) + " " + std::to_string(c.y) + " : " + std::to_string(ang);
 	
-	ang = pos * theta - theta / 2 - start;
+	ang = pos * theta - theta / 2 + atoms[0]->center->getRadians();
 	atoms[pos]->center->fromRadians(ang, radius);
 	theta = circ / atoms.size();
 	for (int i = (pos + 1) % atoms.size(); i != pos; i = (i + 1) % atoms.size()) {
-		atoms[i]->center->fromRadians(ang, radius);
 		ang += theta;
+		atoms[i]->center->fromRadians(ang, radius);
 	}
 	centralAtom = new Atom(new coord2d(0, 0), colorRGB::rand());
 }
