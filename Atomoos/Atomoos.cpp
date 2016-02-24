@@ -29,8 +29,9 @@ void Game::mainRender()
 		a->draw();
 }
 
-int randrange(int start, int end) {
-	return start + rand() % end;
+// min is inclusive, max is exclusive.
+int randrange(int min, int max) {
+	return min + rand() % (max - min);
 }
 
 void Game::mouseLeftDown(coord2d c)
