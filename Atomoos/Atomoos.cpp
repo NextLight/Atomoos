@@ -15,12 +15,10 @@ constexpr float radius = 0.7f;
 int main(int argc, char **argv)
 {
 	Game::Init("beh", 900, 900, 0);
-	centralAtom = new Atom(new coord2d(0, 0), colorRGB::rand());
-	atoms.push_back(new Atom(new coord2d(radius, 0), new colorRGB(1, 1, 1)));
+	centralAtom = new Atom(new coord2d(0, 0), 1);
 	glutMainLoop();
 	return 0;
 }
-
 
 std::string s = "a";
 void Game::mainRender()
@@ -29,6 +27,10 @@ void Game::mainRender()
 	centralAtom->draw();
 	for (Atom* a : atoms)
 		a->draw();
+}
+
+int randrange(int start, int end) {
+	return start + rand() % end;
 }
 
 void Game::mouseLeftDown(coord2d c)
@@ -52,5 +54,5 @@ void Game::mouseLeftDown(coord2d c)
 		ang += theta;
 		atoms[i]->center->fromRadians(ang, radius);
 	}
-	centralAtom = new Atom(new coord2d(0, 0), colorRGB::rand());
+	centralAtom = new Atom(new coord2d(0, 0), randrange(1, 5));
 }
