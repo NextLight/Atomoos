@@ -1,22 +1,22 @@
 #pragma once
 #include <GL/glew.h>
-#include <cmath>
+
+#define PI 3.14159265358979
+
 struct coord2d {
-	coord2d() {}
-	coord2d(GLfloat x, GLfloat y) : x(x), y(y) {}
-	coord2d(GLint x, GLint y, int width, int height) : x(x * 2 / (float)width - 1), y(-y * 2 / (float)height + 1) {}
+	coord2d() {};
+	coord2d(GLfloat x, GLfloat y);
+	coord2d(GLint x, GLint y, int width, int height);
 
 	GLfloat x, y;
+
+	GLfloat getRadians();
+	void fromRadians(float radians, float radius);
 };
 
-float inline randf()
-{
-	return rand() / float(RAND_MAX);
-}
-
 struct colorRGB {
-	colorRGB(GLfloat r, GLfloat g, GLfloat b) : r(r), g(g), b(b) {}
+	colorRGB(GLfloat r, GLfloat g, GLfloat b);
 	GLfloat r, g, b;
 
-	static colorRGB* rand() { return new colorRGB(randf(), randf(), randf()); }
+	static colorRGB* rand();
 };

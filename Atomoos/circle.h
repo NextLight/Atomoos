@@ -22,8 +22,6 @@ namespace Game
 
 		ShaderProgram shader;
 
-#define PI 3.14159265358979
-
 		static constexpr char* vertexSource = R"(
 			#version 420 core
 			layout (location = 0) in vec2 circ;
