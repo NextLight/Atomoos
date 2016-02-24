@@ -10,7 +10,12 @@ public:
 
 	void draw();
 
-	static std::pair<const char*, colorRGB> elements[];
+	struct element {
+		const char* symbol;
+		colorRGB color;
+		const char* name;
+	} static elements[];
+
 	static void Init();
 
 private:
