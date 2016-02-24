@@ -33,22 +33,22 @@ void Game::mainRender()
 void Game::mouseLeftDown(coord2d c)
 {
 	int pos = 0;
-	float theta, ang = 0;
+	float theta = 0, ang = c.getRadians(), start = 0;
 	if (atoms.size() > 0) {
+		start = atoms[0]->center->getRadians();
 		theta = circ / atoms.size();
-		ang = atan2(c.y, c.x);
-		if (ang < 0)
-			ang += circ;
-		pos = floor(ang / theta) + 1;
+		if (start > ang)
+			start -= circ;
+		pos = floor((ang - start) / theta) + 1;
 	}
 	atoms.insert(atoms.begin() + pos, centralAtom);
 	s = std::to_string(c.x) + " " + std::to_string(c.y) + " : " + std::to_string(ang);
 	
+	ang = pos * theta - theta / 2 - start;
+	atoms[pos]->center->fromRadians(ang, radius);
 	theta = circ / atoms.size();
-	ang = 0;
-	for (Atom* a : atoms) {
-		a->center->x = radius * cos(ang);
-		a->center->y = radius * sin(ang);
+	for (int i = (pos + 1) % atoms.size(); i != pos; i = (i + 1) % atoms.size()) {
+		atoms[i]->center->fromRadians(ang, radius);
 		ang += theta;
 	}
 	centralAtom = new Atom(new coord2d(0, 0), colorRGB::rand());
