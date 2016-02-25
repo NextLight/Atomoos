@@ -19,7 +19,7 @@ public:
 		const char* symbol;
 		colorRGB color;
 		const char* name;
-	} static elements[], atomasses[];
+	} static elements[], energyParticles[];
 
 	static void Init();
 
