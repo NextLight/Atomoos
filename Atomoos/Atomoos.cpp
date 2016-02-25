@@ -7,13 +7,15 @@
 #include <iostream>
 #include <vector>
 
+#define max(a, b) a > b ? a : b
+
 std::vector<Atom*> atoms;
 Atom* centralAtom;
 constexpr float circ = 2 * PI;
 constexpr float radius = 0.7f;
 int count = 0;
 int lastRedPlus = 1;
-int score = 0;
+int score = 0; // TODO
 
 int main(int argc, char **argv)
 {
@@ -26,7 +28,6 @@ int main(int argc, char **argv)
 std::string s = "a";
 void Game::mainRender()
 {
-	Game::write(s.c_str(), { -0.95f, 0.95f }, { 0.1f, 0.8f, 0.4f });
 	centralAtom->draw();
 	for (Atom* a : atoms)
 		a->draw();
@@ -35,6 +36,25 @@ void Game::mainRender()
 // n is exclusive
 int inline randrange(int n) {
 	return rand() % n;
+}
+
+int reaction(int idx, bool forced = false) {
+	int l = (idx == 0 ? atoms.size() : idx) - 1;
+	int r = idx + 1 == atoms.size() ? 0 : idx + 1;
+	if (atoms.size() > 2 && (atoms[l]->number == atoms[r]->number || atoms[idx]->type == Atom::atype::black_plus)) {
+		unsigned char number;
+		if (atoms[idx]->type == Atom::atype::normal)
+			number = atoms[idx]->number > atoms[l]->number ? atoms[idx]->number + 1 : atoms[l]->number + 2;
+		else if (atoms[idx]->type == Atom::atype::red_plus)
+			number = atoms[l]->number + 1;
+		else // black_plus
+			number = max(atoms[l]->number, atoms[r]->number) + 3;
+		atoms[l] = new Atom(new coord2d(0, 0), number);
+		atoms.erase(atoms.begin() + r);
+		atoms.erase(atoms.begin() + idx - (r == 0));
+		return 1 + reaction(l - (idx < l) - (r < l));
+	}
+	return 0;
 }
 
 void Game::mouseLeftDown(coord2d c)
@@ -53,9 +73,18 @@ void Game::mouseLeftDown(coord2d c)
 	s = std::to_string(c.x) + " " + std::to_string(c.y) + " : " + std::to_string(ang);
 
 	atoms.insert(atoms.begin() + pos, centralAtom);
+	ang = pos * theta - theta / 2 + atoms[0]->center->getRadians();
+
+	// look for chain reactions
+	for (int i = 0; i < atoms.size(); i++)
+		if (atoms[i]->type == Atom::atype::red_plus || atoms[i]->type == Atom::atype::black_plus) {
+			if (int q = reaction(i)) {
+				pos = (atoms.size() + i - q) % atoms.size();
+				i = -1; // beware of teh bad wolf
+			}
+		}
 
 	// change every atom postion accordingly
-	ang = pos * theta - theta / 2 + atoms[0]->center->getRadians();
 	atoms[pos]->center->fromRadians(ang, radius);
 	theta = circ / atoms.size();
 	for (int i = (pos + 1) % atoms.size(); i != pos; i = (i + 1) % atoms.size()) {
@@ -63,7 +92,7 @@ void Game::mouseLeftDown(coord2d c)
 		atoms[i]->center->fromRadians(ang, radius);
 	}
 
-	// Calulate atomasses spawning chance.
+	// Calulate energy particles spawning chance.
 	Atom::atype type = Atom::atype::normal;
 	// Every time the red plus isn't picked up its chance is doubled and the 5th time (32) is 100%.
 	// I think this works quite well but I should RE the game (or ask the dev eh) to know the real algorithm.
