@@ -1,6 +1,7 @@
 #include "Atom.h"
 #include "Polygon.h"
 #include "Game.h"
+#include <string>
 
 const Game::Polygon* Atom::defaultPolygon = nullptr;
 
@@ -21,7 +22,9 @@ void Atom::draw()
 	Circle::draw();
 
 	const char* text = (type == atype::normal ? elements[number] : energyParticles[type]).symbol;
-	Game::write(text, { center->x - Game::getTextWidth(text) / 2, center->y - Game::getFontHeight() / 2 }, { 1, 1, 1 });
+	Game::write(text, center, { 1, 1, 1 }, Game::fontType::helvetica18);
+	if (type == atype::normal)
+		Game::write(std::to_string(number).c_str(), new coord2d(center->x, center->y - 0.045f), { 1, 1, 1 }, Game::fontType::helvetica12);
 }
 
 void Atom::Init()
