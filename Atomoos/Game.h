@@ -13,6 +13,10 @@ namespace Game
 		coord2d coord;
 	};
 
+	 enum fontType {
+		 helvetica10 = 6, helvetica12, helvetica18
+	 };
+
 	void Init(char * title, int width, int height, bool fullScreen);
 	void setFullScreen(bool b);
 	bool getFullScreen();
@@ -21,13 +25,14 @@ namespace Game
 	void mainRender();
 	void mouseLeftDown(coord2d c);
 
-	void write(const char * s, coord2d coord, colorRGB color);
+	void write(const char * s, coord2d* coord, colorRGB color, fontType font, bool center = true);
 
-	GLfloat getTextWidth(const char * s);
+	GLfloat getTextWidth(const char * s, fontType font);
 
-	GLfloat getFontHeight();
+	GLfloat getFontHeight(fontType font);
+
+	coord2d * getTextCenter(const char * s, coord2d * coord, fontType font);
 
 	extern window_t window;
 	extern mouse_t mouse;
-	extern void * font;
 }

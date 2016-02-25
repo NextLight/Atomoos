@@ -20,7 +20,6 @@ namespace Game
 {
 	window_t window;
 	mouse_t mouse;
-	void* font = GLUT_BITMAP_HELVETICA_18;
 
 	void Init(char* title, int width, int height, bool fullScreen)
 	{
@@ -65,23 +64,31 @@ namespace Game
 		glutFullScreenToggle();
 	}
 
-	void write(const char* s, coord2d coord, colorRGB color)
+	void write(const char* s, coord2d* coord, colorRGB color, fontType font, bool center)
 	{
 		//glLoadIdentity();
 		//glScalef(0.3, 0.3, 1);
 		glColor3f(color.r, color.g, color.b);
-		glRasterPos2f(coord.x, coord.y);
-		glutBitmapString(font, (const unsigned char*)s);
+		coord2d* pos = center ? getTextCenter(s, coord, font) : coord;
+		glRasterPos2f(pos->x, pos->y);
+		glutBitmapString((void*)font, (const unsigned char*)s);
 		// TODO: use glutStrokeString(GLUT_STROKE_ROMAN, (const unsigned char*)s);
 	}
 
-	GLfloat getTextWidth(const char* s) {
-		return glutBitmapLength(font, (const unsigned char*)s) * 2 / (GLfloat)window.width;
+	GLfloat getTextWidth(const char* s, fontType font) 
+	{
+		return glutBitmapLength((void*)font, (const unsigned char*)s) * 2 / (GLfloat)window.width;
 	}
 
-	GLfloat getFontHeight() {
+	GLfloat getFontHeight(fontType font) 
+	{
 		// Upper case chars are ~15/23 the height returned by glutBitmapHeight.
-		return (glutBitmapHeight(font) * 2 / (GLfloat)window.height) * 15 / 23;
+		return (glutBitmapHeight((void*)font) * 2 / (GLfloat)window.height) * 15 / 23;
+	}
+
+	coord2d* getTextCenter(const char* s, coord2d* coord, fontType font) 
+	{
+		return new coord2d(coord->x - Game::getTextWidth(s, font) / 2, coord->y - Game::getFontHeight(font) / 2);
 	}
 }
 
