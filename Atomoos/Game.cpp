@@ -20,6 +20,7 @@ namespace Game
 {
 	window_t window;
 	mouse_t mouse;
+	void* font = GLUT_BITMAP_HELVETICA_18;
 
 	void Init(char* title, int width, int height, bool fullScreen)
 	{
@@ -70,10 +71,18 @@ namespace Game
 		//glScalef(0.3, 0.3, 1);
 		glColor3f(color.r, color.g, color.b);
 		glRasterPos2f(coord.x, coord.y);
-		glutBitmapString(GLUT_BITMAP_HELVETICA_18, (const unsigned char*)s);
+		glutBitmapString(font, (const unsigned char*)s);
 		// TODO: use glutStrokeString(GLUT_STROKE_ROMAN, (const unsigned char*)s);
 	}
 
+	GLfloat getTextWidth(const char* s) {
+		return glutBitmapLength(font, (const unsigned char*)s) * 2 / (GLfloat)window.width;
+	}
+
+	GLfloat getFontHeight() {
+		// Upper case chars are ~15/23 the height returned by glutBitmapHeight.
+		return (glutBitmapHeight(font) * 2 / (GLfloat)window.height) * 15 / 23;
+	}
 }
 
 void reshape(int w, int h)

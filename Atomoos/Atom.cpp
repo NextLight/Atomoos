@@ -13,9 +13,7 @@ Atom::Atom(coord2d* center, unsigned char number) :
 void Atom::draw()
 {
 	Circle::draw();
-	const char* elem = elements[number].symbol;
-	int a = strlen(elem);
-	Game::write(elem, coord2d(center->x - strlen(elem) * 0.014f, center->y - 0.014f), { 1, 1, 1 });
+	Game::write(elements[number].symbol, coord2d(center->x - Game::getTextWidth(elements[number].symbol) / 2, center->y - Game::getFontHeight() / 2), { 1, 1, 1 });
 }
 
 void Atom::Init()

@@ -13,7 +13,7 @@ namespace Game
 		coord2d coord;
 	};
 
-	void Init(char* title, int width, int height, bool fullScreen);
+	void Init(char * title, int width, int height, bool fullScreen);
 	void setFullScreen(bool b);
 	bool getFullScreen();
 	void toggleFullScreen();
@@ -23,6 +23,11 @@ namespace Game
 
 	void write(const char * s, coord2d coord, colorRGB color);
 
+	GLfloat getTextWidth(const char * s);
+
+	GLfloat getFontHeight();
+
 	extern window_t window;
 	extern mouse_t mouse;
+	extern void * font;
 }
