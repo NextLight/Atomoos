@@ -4,22 +4,38 @@
 
 const Game::Polygon* Atom::defaultPolygon = nullptr;
 
-Atom::Atom(coord2d* center, unsigned char number) : 
-	Circle(defaultPolygon, center, &elements[number].color),
+Atom::Atom(coord2d* center, Atom::atype type, const unsigned char number = 0) : 
+	Circle(defaultPolygon, center, &(type == atype::normal ? elements[number] : atomasses[type]).color),
+	type(type),
 	number(number)
+{
+}
+
+Atom::Atom(coord2d * center, const unsigned char number) :
+	Atom(center, atype::normal, number)
 {
 }
 
 void Atom::draw()
 {
 	Circle::draw();
-	Game::write(elements[number].symbol, coord2d(center->x - Game::getTextWidth(elements[number].symbol) / 2, center->y - Game::getFontHeight() / 2), { 1, 1, 1 });
+
+	const char* text = (type == atype::normal ? elements[number] : atomasses[type]).symbol;
+	Game::write(text, { center->x - Game::getTextWidth(text) / 2, center->y - Game::getFontHeight() / 2 }, { 1, 1, 1 });
 }
 
 void Atom::Init()
 {
 	Atom::defaultPolygon = new Game::Polygon(Circle::generateVertices(200, 0.1), 200);
 }
+
+Atom::element Atom::atomasses[] = {
+	{ " ", { 1, 1, 1 } },
+	{ "+", { 1, 0, 0 } },
+	{ "+", { 0, 0, 0 } },
+	{ "-", { 0, 0, 1 } },
+	{ " ", { 1, 1, 1 } }
+};
 
 Atom::element Atom::elements[] = {
 	{ "",	{ 1.000000f, 1.000000f,	1.000000f }, "" },
