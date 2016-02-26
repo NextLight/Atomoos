@@ -25,7 +25,6 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-std::string s = "a";
 void Game::mainRender()
 {
 	centralAtom->draw();
@@ -33,7 +32,7 @@ void Game::mainRender()
 		a->draw();
 }
 
-// n is exclusive
+// return a random number in range [0, n)
 int inline randrange(int n) {
 	return rand() % n;
 }
@@ -41,7 +40,7 @@ int inline randrange(int n) {
 int reaction(int idx, bool forced = false) {
 	int l = (idx == 0 ? atoms.size() : idx) - 1;
 	int r = idx + 1 == atoms.size() ? 0 : idx + 1;
-	if (atoms.size() > 2 && (atoms[l]->number == atoms[r]->number || atoms[idx]->type == Atom::atype::black_plus)) {
+	if (atoms.size() > 2 && (atoms[l]->number == atoms[r]->number && atoms[l]->type == Atom::atype::normal || atoms[idx]->type == Atom::atype::black_plus)) {
 		unsigned char number;
 		if (atoms[idx]->type == Atom::atype::normal)
 			number = atoms[idx]->number > atoms[l]->number ? atoms[idx]->number + 1 : atoms[l]->number + 2;
@@ -57,6 +56,16 @@ int reaction(int idx, bool forced = false) {
 	return 0;
 }
 
+// update atoms position based on atoms[idx] position
+void updateAtomsPosition(int idx)
+{
+	float ang = atoms[idx]->center->getRadians(), theta = circ / atoms.size();
+	for (int i = (idx + 1) % atoms.size(); i != idx; i = (i + 1) % atoms.size()) {
+		ang += theta;
+		atoms[i]->center->fromRadians(ang, radius);
+	}
+}
+
 void Game::mouseLeftDown(coord2d c)
 {
 	++count;
@@ -70,27 +79,29 @@ void Game::mouseLeftDown(coord2d c)
 			start -= circ;
 		pos = floor((ang - start) / theta) + 1;
 	}
-	s = std::to_string(c.x) + " " + std::to_string(c.y) + " : " + std::to_string(ang);
 
 	atoms.insert(atoms.begin() + pos, centralAtom);
-	ang = pos * theta - theta / 2 + atoms[0]->center->getRadians();
+	float phase = atoms[0]->center->getRadians();
+	ang = pos * theta - theta / 2 + phase;
+
+	// change every atom postion accordingly
+	atoms[pos]->center->fromRadians(ang, radius);
+	updateAtomsPosition(pos);
 
 	// look for chain reactions
 	for (int i = 0; i < atoms.size(); i++)
 		if (atoms[i]->type == Atom::atype::red_plus || atoms[i]->type == Atom::atype::black_plus) {
 			if (int q = reaction(i)) {
-				pos = (atoms.size() + i - q) % atoms.size();
+				// if there's a reaction I have to update positions again and check for another one
+				pos = (atoms.size() + i - q - (i >= atoms.size() + q ? atoms.size() + q - i + 1 : 0)) % atoms.size();
+				ang = i * theta - theta / 2 + phase;
+				atoms[pos]->center->fromRadians(ang, radius);
+				updateAtomsPosition(pos);
+				theta = circ / atoms.size();
+				phase = atoms[0]->center->getRadians();
 				i = -1; // beware of teh bad wolf
 			}
 		}
-
-	// change every atom postion accordingly
-	atoms[pos]->center->fromRadians(ang, radius);
-	theta = circ / atoms.size();
-	for (int i = (pos + 1) % atoms.size(); i != pos; i = (i + 1) % atoms.size()) {
-		ang += theta;
-		atoms[i]->center->fromRadians(ang, radius);
-	}
 
 	// Calulate energy particles spawning chance.
 	Atom::atype type = Atom::atype::normal;
