@@ -125,8 +125,8 @@ void render(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Game::mouse.circle.draw();
 	Game::mainRender();
+	Game::mouse.circle.draw();
 	
 	glutSwapBuffers();
 }
